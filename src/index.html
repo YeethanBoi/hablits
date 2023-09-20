@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hablits</title>
+    <script src="./main.js" type="module" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      #loader:after {
+        content: "";
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        border-top-color: #000;
+        animation: spin 1s infinite linear;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loaded #loader {
+        display: none;
+      }
+      .input {
+        transition: border 0.2s ease-in-out;
+        min-width: 280px;
+      }
+      .input:focus + .label,
+      .input:active + .label,
+      .input.filled + .label {
+        font-size: 0.75rem;
+        transition: all 0.2s ease-out;
+        top: -1.5rem;
+        background-color: #ffffff00;
+        color: #669f87;
+        padding: 0 5px 0 5px;
+        margin: 0 5px 0 5px;
+      }
+      .label {
+        transition: all 0.2s ease-out;
+        top: 0rem;
+        left: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loader"></div>
+    <!-- Navbar area -->
+
+    <div
+      class="navbar mx-auto flex w-11/12 items-center justify-between border-b-2 border-gray-300 text-primary-content"
+    >
+      <div>
+        <img src="/assets/hablits_logo.png" alt="Logo" class="h-12 w-auto" />
+      </div>
+      <div>
+        <ul class="flex justify-center space-x-4">
+          <li>
+            <a
+              class="btn btn-ghost text-xl normal-case [&.active]:text-black/90"
+              href="./about/index.html"
+              target="myFrame"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              class="btn btn-ghost text-xl normal-case [&.active]:text-black/90"
+              href="./statistics/index.html"
+              target="myFrame"
+              >Statistics</a
+            >
+          </li>
+          <li>
+            <a
+              class="btn btn-ghost text-xl normal-case"
+              href="./create-habit/index.html"
+              target="myFrame"
+              >Create Hablit</a
+            >
+          </li>
+
+          <li>
+            <a
+              class="btn btn-ghost text-xl normal-case"
+              href="./habits/index.html"
+              target="myFrame"
+              >Your Hablits</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="avatar btn btn-circle btn-ghost">
+          <div class="w-10 rounded-full">
+            <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </div>
+        </label>
+        <ul
+          tabindex="0"
+          class="menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow"
+        >
+          <li>
+            <button class="avatar btn btn-circle btn-ghost" id="profile-btn">
+              <div class="w-10 rounded-full">
+                <img src="/assets/cedar_logo.jpg" />
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <span class="text-xl" id="profile-name">Log In</span>
+        <button class="avatar btn btn-circle btn-ghost" id="profile-btn">
+          <div class="w-10 rounded-full">
+            <img src="/assets/cedar_logo.jpg" />
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <iframe
+      name="myFrame"
+      src="./about/index.html"
+      class="relative w-full"
+      style="height: 40rem"
+    ></iframe>
+  </body>
+</html>

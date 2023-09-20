@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Hablit</title>
+    <script src="./create-habit.js" type="module" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      #loader:after {
+        content: "";
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        border-top-color: #000;
+        animation: spin 1s infinite linear;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loaded #loader {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="p-5">
+    <div id="loader"></div>
+    <h3 class="text-bold mb-4 text-5xl">About Page</h3>
+    <p class="mb-4">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
+      placeat odio enim debitis sed facere expedita? Neque nihil aliquam
+      distinctio voluptas molestias nesciunt aperiam voluptatum nobis reiciendis
+      quam. Nisi sint magni expedita veritatis dolores id tempora neque veniam
+      dicta placeat omnis rerum pariatur, dolor facilis ad quis suscipit itaque
+      voluptas!
+    </p>
+    <a class="btn btn-primary" href="../about/index.html" target="myFrame"
+      >Go back to Home Page</a
+    >
+  </body>
+</html>
