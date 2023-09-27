@@ -118,33 +118,31 @@
           </li>
         </ul>
       </div>
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="avatar btn btn-circle btn-ghost">
-          <div class="w-10 rounded-full">
-            <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-          </div>
-        </label>
-        <ul
-          tabindex="0"
-          class="menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow"
-        >
-          <li>
-            <button class="avatar btn btn-circle btn-ghost" id="profile-btn">
-              <div class="w-10 rounded-full">
-                <img src="/assets/cedar_logo.jpg" />
-              </div>
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <div class="flex items-center space-x-2">
-        <span class="text-xl" id="profile-name">Log In</span>
-        <button class="avatar btn btn-circle btn-ghost" id="profile-btn">
-          <div class="w-10 rounded-full">
-            <img src="/assets/cedar_logo.jpg" />
-          </div>
-        </button>
+      <div>
+        <p class="text-bold mr-5 text-xl" id="name-profile">Guest</p>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="avatar btn btn-circle btn-ghost">
+            <div class="w-10 rounded-full">
+              <img
+                id="profile-picture"
+                src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+              />
+            </div>
+          </label>
+          <ul
+            tabindex="0"
+            class="menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow"
+          >
+            <li>
+              <button
+                class="align-items btn btn-primary w-auto justify-center"
+                id="sign-btn"
+              >
+                Sign In
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 

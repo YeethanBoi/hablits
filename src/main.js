@@ -26,10 +26,17 @@ import {
   onAuthStateChanged,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-auth.js";
-
+const firebaseConfig = {
+  apiKey: "AIzaSyBPUq_3dMVUYPA94SBHBAtkAWsFlySNs6k",
+  authDomain: "hablits-8a957.firebaseapp.com",
+  projectId: "hablits-8a957",
+  storageBucket: "hablits-8a957.appspot.com",
+  messagingSenderId: "607760813629",
+  appId: "1:607760813629:web:34dd984572201352c4a454",
+};
 let signedIn = false;
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 // const db = getFirestore(app);
 // const collectionRef = collection(db, "Users");
@@ -37,11 +44,17 @@ let signedIn = false;
 
 // var db = firebase.firestore();
 
+const userTextNav = document.getElementById("name-profile");
+
 let userId = "";
 let profilePicture = "";
 let username = "";
 
 const provider = new GoogleAuthProvider();
+
+const userButton = document.getElementById("sign-btn");
+
+profilePicture = document.getElementById("profile-picture");
 
 const auth = getAuth();
 
@@ -50,8 +63,11 @@ onAuthStateChanged(auth, (user) => {
     signedIn = true;
     console.log("user is signed in: ", user.displayName);
     userId = user.uid;
-    profilePicture = user.photoURL;
+    profilePicture.src = user.photoURL;
     username = user.displayName;
+    document.getElementById("sign-btn").textContent = "Sign Out";
+
+    userTextNav.textContent = username;
   } else {
     console.log("no user detected");
   }
@@ -79,12 +95,11 @@ console.log(db);
 const loader = document.getElementById("loader");
 loader.style.display = "none";
 
-const userButton = document.getElementById("profile-btn");
-
-document.addEventListener("click", signInWithGooglePopup);
+userButton.addEventListener("click", signInWithGooglePopup);
 
 async function signInWithGooglePopup() {
   if (signedIn == true) {
+    logOut();
     return;
   }
   signInWithPopup(auth, provider)
@@ -103,21 +118,23 @@ async function signInWithGooglePopup() {
       profilePicture = user.photoURL;
       username = user.displayName;
 
+      userTextNav.textContent = username;
+
       profileImg.style.backgroundImage = `url('${profilePicture}')`;
       button.classList.remove("sign-in-button");
       button.classList.add("username-div");
       button.addEventListener("click", logOut);
-      button.textContent = "Sign Out";
+      document.getElementById("sign-btn").textContent = "Sign Out";
       // HELP HELP IM TRAPPED GET ME OUT OF HERE
 
       findUser(username, userId, user.email);
 
       userInfo.textContent = `Current User Logged In: ${username}. `;
 
-      loadMyHabits(userId);
-      // addCollection();
-      daysDifference(userId);
-      updateMyGraph(userId);
+      // loadMyHabits(userId);
+      // // addCollection();
+      // daysDifference(userId);
+      // updateMyGraph(userId);
     })
 
     .catch((error) => {
@@ -134,4 +151,18 @@ async function signInWithGooglePopup() {
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     });
+}
+
+async function findUser(usersName, usersID, email) {
+  const docRef = doc(db, "users", usersID);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+  } else {
+    // docSnap.data() will be undefined in this case
+    // await setDoc(doc(db, "users", usersID), {
+    //   name: usersName,
+    // });
+  }
 }

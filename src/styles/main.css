@@ -10,3 +10,35 @@ body {
 .align-right {
   margin-left: auto;
 }
+
+.segmented-control {
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.segmented-control__item {
+  float: left;
+  list-style-type: none;
+}
+.segmented-control__input {
+  position: absolute;
+  visibility: hidden;
+}
+.segmented-control__label {
+  display: block;
+  padding: 1em 4em;
+  margin: -1px 0;
+  border-left: 1px solid #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+.segmented-control__item:first-child .segmented-control__label {
+  border-left-width: 0;
+}
+.segmented-control__label:hover {
+  background: #fafafa;
+}
+.segmented-control__input:checked + .segmented-control__label {
+  background: #eee;
+}

@@ -12,6 +12,14 @@
       href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
     <style>
       #loader {
         position: fixed;
@@ -52,17 +60,132 @@
   </head>
   <body class="p-5">
     <div id="loader"></div>
-    <h3 class="text-bold mb-4 text-5xl">About Page</h3>
-    <p class="mb-4">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
-      placeat odio enim debitis sed facere expedita? Neque nihil aliquam
-      distinctio voluptas molestias nesciunt aperiam voluptatum nobis reiciendis
-      quam. Nisi sint magni expedita veritatis dolores id tempora neque veniam
-      dicta placeat omnis rerum pariatur, dolor facilis ad quis suscipit itaque
-      voluptas!
-    </p>
-    <a class="btn btn-primary" href="../about/index.html" target="myFrame"
-      >Go back to Home Page</a
+    <h3 class="text-bold font-primary mb-4 text-center text-6xl">
+      Hablit Creation
+    </h3>
+
+    <div class="align-center mb-5 flex justify-center">
+      <details class="align-center dropdown">
+        <summary class="btn m-1">Choose Template</summary>
+        <ul
+          class="menu dropdown-content rounded-box z-[1] ml-auto mr-auto w-56 bg-base-100 p-2 shadow"
+        >
+          <li><a>Drinking Water</a></li>
+          <li><a>Eating Healthy</a></li>
+        </ul>
+      </details>
+      <button class="btn m-1" onclick="my_modal_3.showModal()">
+        <span class="material-symbols-outlined"> help </span>
+      </button>
+    </div>
+
+    <dialog id="my_modal_3" class="modal">
+      <div class="modal-box">
+        <form method="dialog">
+          <button
+            class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+        <h3 class="text-lg font-bold">How to make a Hablit</h3>
+        <p class="py-4">
+          To create a effective Hablit, you need to follow the Cue, Craving,
+          Action and Reward conventions. You first name the habit, then you can
+          type all of the fields what you would do for each. Then you decide if
+          the habit is a daily or monthly habit, and add a profile picture. You
+          can also choose from the templates as well
+        </p>
+      </div>
+    </dialog>
+
+    <div
+      class="card ml-auto mr-auto w-96 bg-gray-200 shadow-xl"
+      style="border: 4px #669f87 solid"
     >
+      <div class="card-body">
+        <form>
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text" style="color: #456e5d; font-weight: bold"
+                >Habit Name</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <input
+              name="habit-name"
+              id="habit-name"
+              type="text"
+              placeholder=""
+              class="bg-white-100 input input-bordered w-full max-w-xs"
+            />
+          </div>
+
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text" style="color: #456e5d; font-weight: bold"
+                >Cue</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <input
+              name="cue"
+              id="cue"
+              type="text"
+              placeholder=""
+              class="bg-white-100 input input-bordered w-full max-w-xs"
+            />
+          </div>
+
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text" style="color: #456e5d; font-weight: bold"
+                >Craving</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <input
+              name="craving"
+              id="craving"
+              type="text"
+              placeholder=""
+              class="bg-white-100 input input-bordered w-full max-w-xs"
+            />
+          </div>
+
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text" style="color: #456e5d; font-weight: bold"
+                >Action</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <input
+              name="action"
+              id="action"
+              type="text"
+              placeholder=""
+              class="bg-white-100 input input-bordered w-full max-w-xs"
+            />
+          </div>
+
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text" style="color: #456e5d; font-weight: bold"
+                >Reward</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <input
+              name="reward"
+              id="reward"
+              type="text"
+              placeholder=""
+              class="bg-white-100 input input-bordered w-full max-w-xs border-gray-300"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
