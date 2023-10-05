@@ -21,6 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
     <style>
+      li a {
+        text-decoration: none;
+        background-color: #f4f4f4;
+      }
       #loader {
         position: fixed;
         top: 0;
@@ -100,14 +104,56 @@
     </dialog>
 
     <div
-      class="card ml-auto mr-auto w-96 bg-gray-200 shadow-xl"
+      class="card ml-auto mr-auto w-1/2 bg-gray-200 shadow-xl"
       style="border: 4px #669f87 solid"
     >
       <div class="card-body">
         <form>
-          <div class="form-control w-full max-w-xs">
+          <label class="label">
+            <span
+              class="label-text text-xl"
+              style="color: #456e5d; font-weight: bold"
+              >Habit Frequency</span
+            >
+            <!-- <span class="label-text-alt">Top Right label</span> -->
+          </label>
+          <ul class="segmented-control mb-5">
+            <li class="segmented-control__item">
+              <a href="#"
+                ><input
+                  class="segmented-control__input"
+                  type="radio"
+                  value="1"
+                  name="option"
+                  id="option-1"
+                  checked
+                />
+                <label class="segmented-control__label" for="option-1"
+                  >Daily</label
+                ></a
+              >
+            </li>
+            <li class="segmented-control__item">
+              <a href="#"
+                ><input
+                  class="segmented-control__input"
+                  type="radio"
+                  value="2"
+                  name="option"
+                  id="option-2"
+                />
+                <label class="segmented-control__label" for="option-2"
+                  >Monthly</label
+                ></a
+              >
+            </li>
+          </ul>
+
+          <div class="form-control mb-5 w-full">
             <label class="label">
-              <span class="label-text" style="color: #456e5d; font-weight: bold"
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
                 >Habit Name</span
               >
               <!-- <span class="label-text-alt">Top Right label</span> -->
@@ -117,13 +163,15 @@
               id="habit-name"
               type="text"
               placeholder=""
-              class="bg-white-100 input input-bordered w-full max-w-xs"
+              class="bg-white-100 input input-bordered w-full"
             />
           </div>
 
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control mb-5 w-full">
             <label class="label">
-              <span class="label-text" style="color: #456e5d; font-weight: bold"
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
                 >Cue</span
               >
               <!-- <span class="label-text-alt">Top Right label</span> -->
@@ -133,13 +181,15 @@
               id="cue"
               type="text"
               placeholder=""
-              class="bg-white-100 input input-bordered w-full max-w-xs"
+              class="bg-white-100 input input-bordered w-full"
             />
           </div>
 
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control mb-5 w-full">
             <label class="label">
-              <span class="label-text" style="color: #456e5d; font-weight: bold"
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
                 >Craving</span
               >
               <!-- <span class="label-text-alt">Top Right label</span> -->
@@ -149,13 +199,15 @@
               id="craving"
               type="text"
               placeholder=""
-              class="bg-white-100 input input-bordered w-full max-w-xs"
+              class="bg-white-100 input input-bordered w-full"
             />
           </div>
 
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control mb-5 w-full">
             <label class="label">
-              <span class="label-text" style="color: #456e5d; font-weight: bold"
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
                 >Action</span
               >
               <!-- <span class="label-text-alt">Top Right label</span> -->
@@ -165,13 +217,15 @@
               id="action"
               type="text"
               placeholder=""
-              class="bg-white-100 input input-bordered w-full max-w-xs"
+              class="bg-white-100 input input-bordered w-full"
             />
           </div>
 
-          <div class="form-control w-full max-w-xs">
+          <div class="form-control mb-5 w-full">
             <label class="label">
-              <span class="label-text" style="color: #456e5d; font-weight: bold"
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
                 >Reward</span
               >
               <!-- <span class="label-text-alt">Top Right label</span> -->
@@ -181,9 +235,28 @@
               id="reward"
               type="text"
               placeholder=""
-              class="bg-white-100 input input-bordered w-full max-w-xs border-gray-300"
+              class="bg-white-100 input input-bordered w-full border-gray-300"
             />
           </div>
+
+          <label class="label">
+            <span
+              class="label-text text-xl"
+              style="color: #456e5d; font-weight: bold"
+              >Image Input</span
+            >
+            <!-- <span class="label-text-alt">Top Right label</span> -->
+          </label>
+
+          <input
+            type="file"
+            class="file-input file-input-bordered w-full"
+            name="image-upload"
+            id="image-upload"
+          />
+          <figure>
+            <img src="/assets/hablits_logo.png" alt="Shoes" />
+          </figure>
         </form>
       </div>
     </div>

@@ -1,6 +1,6 @@
 // import modules that are needed
 import { db } from "./utils/firebase-utils";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import {
   getFirestore,
   collection,
@@ -17,15 +17,15 @@ import {
   limit,
   onSnapshot,
   deleteDoc,
-} from "https://www.gstatic.com/firebasejs/9.9.4/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-analytics.js";
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
 import {
   getAuth,
-  signInWithPopup,
+  signInWithRedirect,
   GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
-} from "https://www.gstatic.com/firebasejs/9.9.4/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBPUq_3dMVUYPA94SBHBAtkAWsFlySNs6k",
   authDomain: "hablits-8a957.firebaseapp.com",
@@ -54,7 +54,7 @@ const provider = new GoogleAuthProvider();
 
 const userButton = document.getElementById("sign-btn");
 
-profilePicture = document.getElementById("profile-picture");
+const profileImg = document.getElementById("profile-picture");
 
 const auth = getAuth();
 
@@ -63,7 +63,7 @@ onAuthStateChanged(auth, (user) => {
     signedIn = true;
     console.log("user is signed in: ", user.displayName);
     userId = user.uid;
-    profilePicture.src = user.photoURL;
+    profileImg.src = user.photoURL;
     username = user.displayName;
     document.getElementById("sign-btn").textContent = "Sign Out";
 
@@ -88,9 +88,10 @@ function logOut() {
 // import the appropriate CSS files
 // main.css contains the css for the entire app, including tailwind
 import "./styles/main.css";
+// import { signInWithRedirect } from "firebase/auth";
 
 console.log("This log is coming from index.js");
-console.log(db);
+// console.log(db);
 
 const loader = document.getElementById("loader");
 loader.style.display = "none";
@@ -102,7 +103,7 @@ async function signInWithGooglePopup() {
     logOut();
     return;
   }
-  signInWithPopup(auth, provider)
+  signInWithRedirect(auth, provider)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -131,6 +132,7 @@ async function signInWithGooglePopup() {
 
       userInfo.textContent = `Current User Logged In: ${username}. `;
 
+      console.log("Gets to it");
       // loadMyHabits(userId);
       // // addCollection();
       // daysDifference(userId);
@@ -154,6 +156,7 @@ async function signInWithGooglePopup() {
 }
 
 async function findUser(usersName, usersID, email) {
+  console.log("YES");
   const docRef = doc(db, "users", usersID);
   const docSnap = await getDoc(docRef);
 
@@ -161,8 +164,13 @@ async function findUser(usersName, usersID, email) {
     console.log("Document data:", docSnap.data());
   } else {
     // docSnap.data() will be undefined in this case
-    // await setDoc(doc(db, "users", usersID), {
-    //   name: usersName,
-    // });
+    console.log("YES");
+    await setDoc(doc(db, "users", usersID), {
+      name: usersName,
+      lastLoggedOn: serverTimestamp(),
+    });
+
+    // Create a new collection 'habits' within the document
+    const habitsCollection = collection(db, "users", usersID, "habits");
   }
 }
