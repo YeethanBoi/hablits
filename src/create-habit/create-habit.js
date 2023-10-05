@@ -2,7 +2,7 @@
 // main.css contains the css for the entire app, including tailwin
 // import modules that are needed
 // import { db } from "../utils/firebase-utils";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage } from "https://www.gstatic.com/firebase/8.10.1/firebase-storage.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import {
   getFirestore,
@@ -20,12 +20,21 @@ import {
   limit,
   onSnapshot,
   deleteDoc,
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+import {
+  getAuth,
+  signInWithRedirect,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  getRedirectResult,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBPUq_3dMVUYPA94SBHBAtkAWsFlySNs6k",
   authDomain: "hablits-8a957.firebaseapp.com",
   projectId: "hablits-8a957",
-  storageBucket: "gs://hablits-8a957.appspot.com",
+  storageBucket: "hablits-8a957.appspot.com",
   messagingSenderId: "607760813629",
   appId: "1:607760813629:web:34dd984572201352c4a454",
 };
@@ -35,7 +44,7 @@ const loader = document.getElementById("loader");
 loader.style.display = "none";
 
 const app = initializeApp(firebaseConfig);
-
+const db = getFirestore(app);
 const storage = getStorage(app);
 
 const fileInput = document.getElementById("image-upload");
@@ -70,7 +79,7 @@ function uploadFile() {
               console.log("Download URL saved to Firestore database.");
 
               // Display the uploaded image
-              var uploadedImage = document.getElementById("uploadedImage");
+              let uploadedImage = document.getElementById("uploadedImage");
               uploadedImage.src = downloadURL;
             })
             .catch(function (error) {

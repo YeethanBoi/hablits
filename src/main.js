@@ -1,5 +1,5 @@
 // import modules that are needed
-import { db } from "./utils/firebase-utils";
+// import { db } from "./utils/firebase-utils";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import {
   getFirestore,
@@ -24,6 +24,7 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
   onAuthStateChanged,
+  getRedirectResult,
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const firebaseConfig = {
@@ -38,7 +39,7 @@ let signedIn = false;
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-// const db = getFirestore(app);
+const db = getFirestore(app);
 // const collectionRef = collection(db, "Users");
 // const form = document.querySelector(".myForm");
 
@@ -103,57 +104,71 @@ async function signInWithGooglePopup() {
     logOut();
     return;
   }
-  signInWithRedirect(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log(user);
+  signInWithRedirect(auth, provider).catch((error) => {
+    // const userId = "bdsfhadabsfbjds";
+    console.log("doesn't work");
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
 
-      signedIn = true;
-
-      //saves user data from google account
-      userId = user.uid;
-      profilePicture = user.photoURL;
-      username = user.displayName;
-
-      userTextNav.textContent = username;
-
-      profileImg.style.backgroundImage = `url('${profilePicture}')`;
-      button.classList.remove("sign-in-button");
-      button.classList.add("username-div");
-      button.addEventListener("click", logOut);
-      document.getElementById("sign-btn").textContent = "Sign Out";
-      // HELP HELP IM TRAPPED GET ME OUT OF HERE
-
-      findUser(username, userId, user.email);
-
-      userInfo.textContent = `Current User Logged In: ${username}. `;
-
-      console.log("Gets to it");
-      // loadMyHabits(userId);
-      // // addCollection();
-      // daysDifference(userId);
-      // updateMyGraph(userId);
-    })
-
-    .catch((error) => {
-      // const userId = "bdsfhadabsfbjds";
-      console.log("doesn't work");
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      console.log(errorMessage);
-      // The email of the user's account used.
-      // const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
+    console.log(errorMessage);
+    // The email of the user's account used.
+    // const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
 }
+
+// Call this function when your app initializes
+async function checkRedirectResult() {
+  try {
+    const userCred = await getRedirectResult(auth);
+    // The signed-in user info.
+    const user = userCred.user;
+    console.log(user);
+
+    signedIn = true;
+
+    //saves user data from google account
+    userId = user.uid;
+    profilePicture = user.photoURL;
+    username = user.displayName;
+
+    userTextNav.textContent = username;
+
+    profileImg.style.backgroundImage = `url('${profilePicture}')`;
+    // button.classList.remove("sign-in-button");
+    // button.classList.add("username-div");
+    // button.addEventListener("click", logOut);
+    // document.getElementById("sign-btn").textContent = "Sign Out";
+
+    findUser(username, userId, user.email);
+
+    // userInfo.textContent = `Current User Logged In: ${username}. `;
+
+    console.log("Gets to it");
+    // loadMyHabits(userId);
+    // // addCollection();
+    // daysDifference(userId);
+    // updateMyGraph(userId);
+  } catch (error) {
+    // console.log("doesn't work");
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    console.log(errorMessage);
+    // The email of the user's account used.
+    // const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  }
+}
+
+// Call the function when your app initializes
+checkRedirectResult();
 
 async function findUser(usersName, usersID, email) {
   console.log("YES");
@@ -164,13 +179,35 @@ async function findUser(usersName, usersID, email) {
     console.log("Document data:", docSnap.data());
   } else {
     // docSnap.data() will be undefined in this case
-    console.log("YES");
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; // January is 0
+    let yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+
+    let dateString = dd + "-" + mm + "-" + yyyy;
+    console.log(dateString); // Outputs: dd-mm-yyyy
+
+    // console.log("YES");
     await setDoc(doc(db, "users", usersID), {
       name: usersName,
       lastLoggedOn: serverTimestamp(),
+      dateImprovement: [dateString],
+      percentageImprovement: [100],
     });
 
     // Create a new collection 'habits' within the document
-    const habitsCollection = collection(db, "users", usersID, "habits");
+    const habitsCollection = collection(docRef, "habits");
+
+    await setDoc(doc(habitsCollection, "dummy"), {
+      dummy: true,
+    });
   }
 }
