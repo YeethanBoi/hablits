@@ -68,16 +68,22 @@
       Hablit Creation
     </h3>
 
-    <div class="align-center mb-5 flex justify-center">
-      <details class="align-center dropdown">
-        <summary class="btn m-1">Choose Template</summary>
-        <ul
-          class="menu dropdown-content rounded-box z-[1] ml-auto mr-auto w-56 bg-base-100 p-2 shadow"
-        >
-          <li><a>Drinking Water</a></li>
-          <li><a>Eating Healthy</a></li>
-        </ul>
-      </details>
+    <div class="align-center flex justify-center" id="habit-selector">
+      <select
+        class="select w-full max-w-xs"
+        style="border: 2px #669f87 solid"
+        id="preset-selector"
+      >
+        <option disabled selected style="font-weight: bold">
+          Habit Preset
+        </option>
+        <option value="guitar">Practicing Guitar</option>
+        <option value="meditating">Meditating</option>
+        <option value="reading">Reading</option>
+        <option value="rowing">Rowing</option>
+        <option value="painting">Painting</option>
+        <option value="none">None</option>
+      </select>
       <button class="btn m-1" onclick="my_modal_3.showModal()">
         <span class="material-symbols-outlined"> help </span>
       </button>
@@ -243,20 +249,42 @@
             <span
               class="label-text text-xl"
               style="color: #456e5d; font-weight: bold"
-              >Image Input</span
+              >Image Selection (For presets)</span
             >
             <!-- <span class="label-text-alt">Top Right label</span> -->
           </label>
 
-          <input
-            type="file"
-            class="file-input file-input-bordered w-full"
-            name="image-upload"
-            id="image-upload"
-          />
-          <figure>
-            <img src="/assets/hablits_logo.png" alt="Shoes" />
-          </figure>
+          <div style="position: relative; height: auto; width: 100%">
+            <div
+              style="position: absolute; top: 20px; left: 20px; z-index: 999"
+            >
+              <select
+                class="select w-full"
+                style="border: 2px #669f87 solid"
+                id="picture-selector"
+              >
+                <option disabled selected style="font-weight: bold">
+                  Select a picture template
+                </option>
+                <option value="guitar">Practicing Guitar</option>
+                <option value="meditating">Meditating</option>
+                <option value="reading">Reading</option>
+                <option value="rowing">Rowing</option>
+                <option value="painting">Painting</option>
+                <option value="none">None</option>
+              </select>
+            </div>
+
+            <figure>
+              <img
+                style="border: 3px #669f87 solid; height: auto; width: 100%"
+                class="rounded-xl"
+                src="../assets/coffee.png"
+                alt="Album"
+                id="habit-picture"
+              />
+            </figure>
+          </div>
         </form>
       </div>
     </div>
