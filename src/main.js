@@ -1,5 +1,5 @@
 // import modules that are needed
-// import { db } from "./utils/firebase-utils";
+import { db } from "./utils/firebase-utils";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import {
   getFirestore,
@@ -17,7 +17,7 @@ import {
   limit,
   onSnapshot,
   deleteDoc,
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+} from "firebase/firestore";
 // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
 import {
   getAuth,
@@ -26,7 +26,7 @@ import {
   onAuthStateChanged,
   getRedirectResult,
   signOut,
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+} from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyBPUq_3dMVUYPA94SBHBAtkAWsFlySNs6k",
   authDomain: "hablits-8a957.firebaseapp.com",
@@ -37,9 +37,9 @@ const firebaseConfig = {
 };
 let signedIn = false;
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-const db = getFirestore(app);
+// const db = getFirestore(app);
 // const collectionRef = collection(db, "Users");
 // const form = document.querySelector(".myForm");
 

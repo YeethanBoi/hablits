@@ -2,8 +2,9 @@
 // main.css contains the css for the entire app, including tailwin
 // import modules that are needed
 // import { db } from "../utils/firebase-utils";
-import { getStorage } from "https://www.gstatic.com/firebase/8.10.1/firebase-storage.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import {
   getFirestore,
   collection,
@@ -47,11 +48,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const fileInput = document.getElementById("image-upload");
+let fileInput = document.getElementById("image-upload");
 
-fileInput.addEventListener("change", uploadFile());
+fileInput.addEventListener("change", uploadFile(), false);
 
-function uploadFile() {
+async function uploadFile() {
   console.log("Working");
   var file = fileInput.files[0];
 
