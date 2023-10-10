@@ -8,31 +8,75 @@ const presetSelect = document.getElementById("preset-selector");
 
 const habitPicture = document.getElementById("habit-picture");
 
+//all of the different form parts
+const habitName = document.getElementById("habit-name");
+
+const cue = document.getElementById("cue");
+
+const craving = document.getElementById("craving");
+
+const action = document.getElementById("action");
+
+const reward = document.getElementById("reward");
+
+const form = document.getElementById("habit-form");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  console.log("Worsdksfd");
+});
+
 pictureSelect.addEventListener("change", changedSelectedPicture, false);
 
 presetSelect.addEventListener("change", changePresets, false);
 
 function changedSelectedPicture() {
-  console.log("Registered change");
+  // console.log("Registered change");
   if (pictureSelect.value == "none") {
-    console.log("Chose Default Option");
+    // console.log("Chose Default Option");
     habitPicture.src = "../assets/allhabits.png";
   } else {
     habitPicture.src = `../assets/${pictureSelect.value}.png`;
   }
 }
 
+async function ClickedSubmit() {
+  console.log("Works");
+}
+
 function changePresets() {
   let selectedPreset;
   for (let i = 0; i < presets.length; i++) {
-    console.log(presetSelect.value + "||" + presets[i].name);
+    // console.log(presetSelect.value + "||" + presets[i].name);
     if (presetSelect.value == presets[i].name) {
-      console.log("The preset chosen was " + presetSelect.value);
+      // console.log("The preset chosen was " + presetSelect.value);
       selectedPreset = presets[i];
     }
   }
 
-  console.log(selectedPreset);
+  habitName.value = capitalizeFLetter(selectedPreset.name);
+  cue.value = selectedPreset.cue;
+  craving.value = selectedPreset.cue;
+  action.value = selectedPreset.action;
+  reward.value = selectedPreset.reward;
+  cue.value = selectedPreset.cue;
+
+  pictureSelect.value = selectedPreset.name;
+  if (selectedPreset.name == "none") {
+    // console.log("Chose Default Option");
+
+    habitPicture.src = "../assets/allhabits.png";
+  } else {
+    habitPicture.src = `../assets/${selectedPreset.name}.png`;
+  }
+
+  // console.log(selectedPreset);
+}
+
+function capitalizeFLetter(mystring) {
+  // let string = 'geeksforgeeks';
+  let thestring = mystring[0].toUpperCase() + mystring.slice(1);
+  return thestring;
 }
 
 habitPicture.src = "../assets/allhabits.png";
@@ -51,7 +95,7 @@ const guitar = {
 
 const meditation = {
   isDaily: true,
-  name: "meditation",
+  name: "meditating",
   cue: "When I sit on my meditation cushion in the morning",
   craving: "I want to find inner peace and reduce stress",
   action: "I will meditate for 15 minutes",
@@ -104,9 +148,9 @@ const running = {
   percentageImprovement: 5, // 5% improvement
 };
 
-const healthyEating = {
+const eating = {
   isDaily: true,
-  name: "healthyeating",
+  name: "eating",
   cue: "When I open the fridge for a snack",
   craving: "I want to nourish my body and maintain a healthy weight",
   action: "I will choose a healthy snack or meal option",
@@ -148,4 +192,15 @@ const yoga = {
   percentageImprovement: 5, // 5% improvement
 };
 
-const presets = [guitar, meditation, reading, rowing, painting];
+const presets = [
+  guitar,
+  meditation,
+  reading,
+  rowing,
+  painting,
+  running,
+  languageLearning,
+  eating,
+  yoga,
+  journaling,
+];

@@ -68,9 +68,9 @@
       Hablit Creation
     </h3>
 
-    <div class="align-center flex justify-center" id="habit-selector">
+    <div class="align-center mb-1 flex justify-center" id="habit-selector">
       <select
-        class="select w-full max-w-xs"
+        class="select mr-2 w-full max-w-xs"
         style="border: 2px #669f87 solid"
         id="preset-selector"
       >
@@ -82,10 +82,25 @@
         <option value="reading">Reading</option>
         <option value="rowing">Rowing</option>
         <option value="painting">Painting</option>
+        <option value="languagelearning">Language Learning</option>
+        <option value="running">Running</option>
+        <option value="eating">Eating Healthy</option>
+        <option value="yoga">Yoga</option>
+        <option value="journaling">Journaling</option>
         <option value="none">None</option>
       </select>
-      <button class="btn m-1" onclick="my_modal_3.showModal()">
-        <span class="material-symbols-outlined"> help </span>
+      <button
+        class="btn mb-1"
+        style="
+          border: 2px #669f87 solid;
+          background-color: #f3eef2;
+          color: #355447;
+        "
+        onclick="my_modal_3.showModal()"
+      >
+        <span class="material-symbols-outlined" style="color: #355447">
+          help
+        </span>
       </button>
     </div>
 
@@ -114,7 +129,7 @@
       style="border: 4px #669f87 solid"
     >
       <div class="card-body">
-        <form>
+        <form id="habit-form">
           <label class="label">
             <span
               class="label-text text-xl"
@@ -167,6 +182,7 @@
             <input
               name="habit-name"
               id="habit-name"
+              required
               type="text"
               placeholder=""
               class="bg-white-100 input input-bordered w-full"
@@ -183,6 +199,7 @@
               <!-- <span class="label-text-alt">Top Right label</span> -->
             </label>
             <input
+              required
               name="cue"
               id="cue"
               type="text"
@@ -201,6 +218,7 @@
               <!-- <span class="label-text-alt">Top Right label</span> -->
             </label>
             <input
+              required
               name="craving"
               id="craving"
               type="text"
@@ -219,6 +237,7 @@
               <!-- <span class="label-text-alt">Top Right label</span> -->
             </label>
             <input
+              required
               name="action"
               id="action"
               type="text"
@@ -237,6 +256,7 @@
               <!-- <span class="label-text-alt">Top Right label</span> -->
             </label>
             <input
+              required
               name="reward"
               id="reward"
               type="text"
@@ -254,11 +274,12 @@
             <!-- <span class="label-text-alt">Top Right label</span> -->
           </label>
 
-          <div style="position: relative; height: auto; width: 100%">
+          <div style="position: relative; height: auto; width: 75%">
             <div
               style="position: absolute; top: 20px; left: 20px; z-index: 999"
             >
               <select
+                required
                 class="select w-full"
                 style="border: 2px #669f87 solid"
                 id="picture-selector"
@@ -271,6 +292,11 @@
                 <option value="reading">Reading</option>
                 <option value="rowing">Rowing</option>
                 <option value="painting">Painting</option>
+                <option value="languagelearning">Language Learning</option>
+                <option value="running">Running</option>
+                <option value="eating">Eating Healthy</option>
+                <option value="yoga">Yoga</option>
+                <option value="journaling">Journaling</option>
                 <option value="none">None</option>
               </select>
             </div>
@@ -285,6 +311,10 @@
               />
             </figure>
           </div>
+
+          <button class="btn btn-primary mt-5" id="submit">
+            Submit Your Hablit!
+          </button>
         </form>
       </div>
     </div>
