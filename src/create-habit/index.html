@@ -64,6 +64,7 @@
   </head>
   <body class="p-5">
     <div id="loader"></div>
+
     <h3 class="text-bold font-primary mb-4 text-center text-6xl">
       Hablit Creation
     </h3>
@@ -74,7 +75,12 @@
         style="border: 2px #669f87 solid"
         id="preset-selector"
       >
-        <option disabled selected style="font-weight: bold">
+        <option
+          disabled
+          value="habit-preset"
+          selected
+          style="font-weight: bold"
+        >
           Habit Preset
         </option>
         <option value="guitar">Practicing Guitar</option>
@@ -265,6 +271,40 @@
             />
           </div>
 
+          <div class="form-control mb-5 w-full">
+            <label class="label">
+              <span
+                class="label-text text-xl"
+                style="color: #456e5d; font-weight: bold"
+                >Percentage Improvement</span
+              >
+              <!-- <span class="label-text-alt">Top Right label</span> -->
+            </label>
+            <div style="display: flex; flex-direction: row">
+              <div class="w-1/5">
+                <p class="text-3xl" style="text-align: center" id="demo">5%</p>
+              </div>
+              <div class="w-4/5">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="5"
+                  class="range range-primary"
+                  id="myRange"
+                />
+
+                <div class="flex w-full justify-between px-2 text-xs">
+                  <span>0%</span>
+                  <span>25%</span>
+                  <span>50%</span>
+                  <span>75%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <label class="label">
             <span
               class="label-text text-xl"
@@ -316,6 +356,17 @@
             Submit Your Hablit!
           </button>
         </form>
+      </div>
+    </div>
+    <div class="toast toast-end">
+      <div class="alert-primary alert" style="border: #355447 2px solid">
+        <span>Habit created successfully.</span>
+        <button
+          class="btn-clear btn btn-primary float-right text-2xl"
+          onclick="this.parentElement.style.display='none';"
+        >
+          ×
+        </button>
       </div>
     </div>
   </body>

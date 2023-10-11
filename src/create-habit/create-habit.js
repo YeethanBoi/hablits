@@ -1,4 +1,40 @@
 import "../styles/main.css";
+import { startWindToast } from "@mariojgt/wind-notify/packages/index.js";
+import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+// import userId from "../main.js";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { success } from "@mariojgt/wind-notify/packages/toasts/messages";
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://support.google.com/firebase/answer/7015592
+const firebaseConfig = {
+  apiKey: "AIzaSyBPUq_3dMVUYPA94SBHBAtkAWsFlySNs6k",
+  authDomain: "hablits-8a957.firebaseapp.com",
+  projectId: "hablits-8a957",
+  storageBucket: "hablits-8a957.appspot.com",
+  messagingSenderId: "607760813629",
+  appId: "1:607760813629:web:34dd984572201352c4a454",
+};
+
+window.onload = function () {
+  var closeButtons = document.querySelectorAll(".btn-clear");
+  closeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      this.parentElement.style.display = "none";
+    });
+  });
+};
+
+var closeButtons = document.querySelectorAll(".btn-clear");
+closeButtons.forEach(function (button) {
+  button.parentElement.style.display = "none";
+});
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
 const loader = document.getElementById("loader");
 loader.style.display = "none";
 
@@ -20,11 +56,72 @@ const action = document.getElementById("action");
 const reward = document.getElementById("reward");
 
 const form = document.getElementById("habit-form");
+// let userID = document.getElementById("user-id").textContent;
+// console.log(userID);
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
-  console.log("Worsdksfd");
+
+  //date selector part
+  let selectedOption = document.querySelector(
+    'input[name="option"]:checked',
+  ).value;
+  let isDailyOption;
+  if (selectedOption == "1") {
+    isDailyOption = true;
+  } else {
+    isDailyOption = false;
+  }
+
+  let selectedHabitName = habitName.value;
+  let selectedCue = cue.value;
+  let selectedCraving = craving.value;
+  let selectedAction = action.value;
+  let selectedReward = reward.value;
+  let selectedPercentage = slider.value;
+  let selectedPicture = pictureSelect.value;
+
+  let theUserId = localStorage.getItem("userId");
+  console.log(theUserId);
+
+  await addDoc(collection(db, "users", theUserId, "habits"), {
+    habitName: selectedHabitName,
+    cue: selectedCue,
+    craving: selectedCraving,
+    action: selectedAction,
+    reward: selectedReward,
+    percentage: selectedPercentage,
+    isDaily: isDailyOption,
+    picture: selectedPicture,
+    hasCompletedToday: false,
+  });
+
+  window.onload = function () {
+    let iframe = document.getElementById("the-frame");
+    iframe.src = "./habits/index.html";
+  };
+
+  var closeButtons = document.querySelectorAll(".btn-clear");
+  closeButtons.forEach(function (button) {
+    button.parentElement.style.display = null;
+  });
+
+  form.reset();
+  presetSelect.value = "habit-preset";
+
+  window.scrollTo(0, 0);
 });
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+
+// Display the default slider value
+output.innerHTML = slider.value + "%";
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function () {
+  output.innerHTML = this.value + "%";
+};
 
 pictureSelect.addEventListener("change", changedSelectedPicture, false);
 
@@ -38,10 +135,6 @@ function changedSelectedPicture() {
   } else {
     habitPicture.src = `../assets/${pictureSelect.value}.png`;
   }
-}
-
-async function ClickedSubmit() {
-  console.log("Works");
 }
 
 function changePresets() {
@@ -60,6 +153,8 @@ function changePresets() {
   action.value = selectedPreset.action;
   reward.value = selectedPreset.reward;
   cue.value = selectedPreset.cue;
+  slider.value = selectedPreset.percentageImprovement;
+  output.innerHTML = slider.value + "%";
 
   pictureSelect.value = selectedPreset.name;
   if (selectedPreset.name == "none") {

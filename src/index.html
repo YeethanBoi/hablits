@@ -122,7 +122,7 @@
         <p class="text-bold mr-5 text-xl" style="color: #000" id="name-profile">
           Guest
         </p>
-        <div class="dropdown dropdown-end">
+        <div class="dropdown-end dropdown">
           <label tabindex="0" class="avatar btn btn-circle btn-ghost">
             <div class="w-10 rounded-full">
               <img
@@ -135,6 +135,11 @@
             tabindex="0"
             class="menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow"
           >
+            <div class="m-2">
+              <p style="color: #000">Your ID:</p>
+              <p style="color: #000" id="user-id"></p>
+            </div>
+
             <li>
               <button
                 class="align-items btn btn-primary w-auto justify-center"
@@ -149,6 +154,7 @@
     </div>
 
     <iframe
+      id="the-frame"
       name="myFrame"
       src="./about/index.html"
       class="relative w-full"

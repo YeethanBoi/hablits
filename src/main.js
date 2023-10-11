@@ -48,6 +48,7 @@ let signedIn = false;
 const userTextNav = document.getElementById("name-profile");
 
 let userId = "";
+// export default userId;
 let profilePicture = "";
 let username = "";
 
@@ -64,11 +65,14 @@ onAuthStateChanged(auth, (user) => {
     signedIn = true;
     console.log("user is signed in: ", user.displayName);
     userId = user.uid;
+    localStorage.setItem("userId", userId);
+    document.getElementById("user-id").textContent = userId;
     profileImg.src = user.photoURL;
     username = user.displayName;
     document.getElementById("sign-btn").textContent = "Sign Out";
 
     userTextNav.textContent = username;
+    checkRedirectResult(user);
   } else {
     console.log("no user detected");
   }
@@ -121,11 +125,14 @@ async function signInWithGooglePopup() {
 }
 
 // Call this function when your app initializes
-async function checkRedirectResult() {
+async function checkRedirectResult(user) {
   try {
     const userCred = await getRedirectResult(auth);
+
     // The signed-in user info.
-    const user = userCred.user;
+    // const user = userCred.user;
+    // ...
+    // const user = userCred.user;
     console.log(user);
 
     signedIn = true;
@@ -148,6 +155,9 @@ async function checkRedirectResult() {
     // userInfo.textContent = `Current User Logged In: ${username}. `;
 
     console.log("Gets to it");
+
+    // The signed-in user info.
+
     // loadMyHabits(userId);
     // // addCollection();
     // daysDifference(userId);
@@ -168,7 +178,7 @@ async function checkRedirectResult() {
 }
 
 // Call the function when your app initializes
-checkRedirectResult();
+// checkRedirectResult();
 
 async function findUser(usersName, usersID, email) {
   console.log("YES");
@@ -209,5 +219,7 @@ async function findUser(usersName, usersID, email) {
     await setDoc(doc(habitsCollection, "dummy"), {
       dummy: true,
     });
+
+    console.log("Workds");
   }
 }
