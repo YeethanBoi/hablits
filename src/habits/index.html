@@ -13,6 +13,44 @@
       rel="stylesheet"
     />
     <style>
+      .accordion {
+        background-color: #eee;
+        color: #070707;
+        cursor: pointer;
+        padding: 5px;
+        padding-left: 20px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+      }
+
+      .active,
+      .accordion:hover {
+        background-color: #ccc;
+      }
+      .accordion:after {
+        content: "\02795"; /* Unicode character for "plus" sign (+) */
+        font-size: 13px;
+        color: #777;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2796"; /* Unicode character for "minus" sign (-) */
+      }
+
+      .panel {
+        /* padding: 0 18px; */
+        background-color: white;
+        /* width: 30vw; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+      }
       #loader {
         position: fixed;
         top: 0;
@@ -52,17 +90,58 @@
   </head>
   <body class="p-5">
     <div id="loader"></div>
-    <h3 class="text-bold mb-4 text-5xl">About Page</h3>
-    <p class="mb-4">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
-      placeat odio enim debitis sed facere expedita? Neque nihil aliquam
-      distinctio voluptas molestias nesciunt aperiam voluptatum nobis reiciendis
-      quam. Nisi sint magni expedita veritatis dolores id tempora neque veniam
-      dicta placeat omnis rerum pariatur, dolor facilis ad quis suscipit itaque
-      voluptas!
-    </p>
-    <a class="btn btn-primary" href="../about/index.html" target="myFrame"
-      >Go back to Home Page</a
-    >
+    <div class="m-5" class="electorate" style="width: 30%">
+      <div
+        style="
+          height: fit-content;
+          width: fit-content;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+
+          border: 2px solid black;
+          display: flex;
+          flex-direction: row;
+          position: relative;
+        "
+        class="text-bold text-4xl"
+      >
+        <div
+          class="accordion"
+          style="
+            position: absolute;
+            border-top-right-radius: 10px;
+
+            border: 2px solid black;
+            width: 75%;
+            bottom: 0;
+            left: 0;
+          "
+        >
+          test
+        </div>
+        <figure>
+          <img
+            style="height: 30vh; width: 30vw; object-fit: cover"
+            class="rounded-xl"
+            src="../assets/coffee.png"
+            alt="Album"
+            id="habit-picture"
+          />
+        </figure>
+        <!-- Habit -->
+      </div>
+
+      <!-- <div>Main Industry</div> -->
+      <div
+        class="panel"
+        style="
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border: 2px solid black;
+        "
+      >
+        <div class="p-3">yeet</div>
+      </div>
+    </div>
   </body>
 </html>

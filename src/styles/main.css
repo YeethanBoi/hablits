@@ -11,6 +11,13 @@ body {
   margin-left: auto;
 }
 
+.card {
+  transition: all 0.3s ease;
+}
+.expanded {
+  /* grid-column: span 2; */
+  grid-row: span 2;
+}
 .segmented-control {
   display: inline-block;
   border: 3px solid #669f87;
