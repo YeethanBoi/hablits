@@ -98,9 +98,68 @@
       }
     </style>
   </head>
-  <body class="p-5">
+  <body class="p-10">
     <div id="loader"></div>
-    <div style="display: flex; flex-direction: row">
+    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight">
+      Your Hablits
+    </h1>
+
+    <label class="label">
+      <span
+        class="text-large label-text"
+        style="color: #456e5d; font-weight: bold"
+        >Sort By:</span
+      >
+      <!-- <span class="label-text-alt">Top Right label</span> -->
+    </label>
+    <ul class="segmented-control mb-5">
+      <li class="segmented-control__item">
+        <a href="#"
+          ><input
+            class="segmented-control__input"
+            type="radio"
+            value="1"
+            name="option"
+            id="option-1"
+            checked
+          />
+          <label class="segmented-control__label" for="option-1">Any</label></a
+        >
+      </li>
+      <li class="segmented-control__item">
+        <a href="#"
+          ><input
+            class="segmented-control__input"
+            type="radio"
+            value="2"
+            name="option"
+            id="option-2"
+          />
+          <label class="segmented-control__label" for="option-2"
+            >Monthly</label
+          ></a
+        >
+      </li>
+      <li class="segmented-control__item">
+        <a href="#"
+          ><input
+            class="segmented-control__input"
+            type="radio"
+            value="3"
+            name="option"
+            id="option-3"
+            checked
+          />
+          <label class="segmented-control__label" for="option-3"
+            >Daily</label
+          ></a
+        >
+      </li>
+    </ul>
+    <div
+      style="display: flex; flex-direction: row; flex-wrap: wrap"
+      id="habit-div"
+    >
       <div class="m-5" class="electorate" style="width: 30%">
         <div
           style="
