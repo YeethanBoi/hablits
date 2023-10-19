@@ -60,7 +60,16 @@ const profileImg = document.getElementById("profile-picture");
 
 const auth = getAuth();
 
+async function updateTime() {
+  const habitRef = doc(db, "users", user.uid);
+
+  await updateDoc(habitRef, {
+    lastLoggedOn: serverTimestamp(),
+  });
+}
+
 onAuthStateChanged(auth, (user) => {
+  updateTime();
   if (user) {
     signedIn = true;
     console.log("user is signed in: ", user.displayName);

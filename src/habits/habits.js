@@ -4,7 +4,9 @@ import "../styles/main.css";
 import { db } from "../utils/firebase-utils";
 // import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import {
+  deleteDoc,
   collection,
+  doc,
   query,
   where,
   getDocs,
@@ -27,11 +29,29 @@ const firebaseConfig = {
   messagingSenderId: "607760813629",
   appId: "1:607760813629:web:34dd984572201352c4a454",
 };
+
 const loader = document.getElementById("loader");
 loader.style.display = "none";
 
+window.onload = function () {
+  var closeButtons = document.querySelectorAll(".btn-clear");
+  closeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      this.parentElement.style.display = "none";
+    });
+  });
+};
+
+var closeButtons = document.querySelectorAll(".btn-clear");
+closeButtons.forEach(function (button) {
+  button.parentElement.style.display = "none";
+});
+
 function addFunctionality() {
-  document.querySelectorAll(".card").forEach((card) => {
+  document.querySelectorAll(".thecard").forEach((card) => {
+    console.log("found card");
+    card.querySelector(".tickbox").addEventListener("change", tickedbox, false);
+    card.querySelector(".delbox").addEventListener("click", deletedbox);
     card.addEventListener("click", (event) => {
       event.currentTarget.classList.toggle("expanded");
     });
@@ -94,7 +114,72 @@ function addFunctionality() {
   });
 }
 
+async function deletedbox() {
+  console.log("deleted");
+  let theHabitName = String(this.parentNode.firstElementChild.textContent);
+  theHabitName = theHabitName.trim();
+  console.log(theHabitName);
+
+  let theUserId = localStorage.getItem("userId");
+  let theHabitId = sessionStorage.getItem(theHabitName);
+  await deleteDoc(doc(db, "users", theUserId, "habits", theHabitId));
+  this.parentNode.parentNode.remove();
+}
+
+async function tickedbox() {
+  let theHabitName = String(
+    this.parentNode.parentNode.parentNode.firstElementChild.textContent,
+  );
+  theHabitName = theHabitName.trim();
+  console.log(theHabitName);
+
+  let theUserId = localStorage.getItem("userId");
+  let theHabitId = sessionStorage.getItem(theHabitName);
+  if (this.checked == true) {
+    console.log(theHabitId);
+
+    const habitRef = doc(db, "users", theUserId, "habits", theHabitId);
+
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(habitRef, {
+      hasCompletedToday: true,
+    });
+  } else {
+    const habitRef = doc(db, "users", theUserId, "habits", theHabitId);
+
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(habitRef, {
+      hasCompletedToday: false,
+    });
+  }
+  let amountCompleted = 0;
+  let habitCount = 0;
+
+  const q = query(collection(db, "users", theUserId, "habits"));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().isDaily == true) {
+      habitCount++;
+      if (doc.data().hasCompletedToday == true) {
+        amountCompleted++;
+      }
+    }
+  });
+
+  console.log(habitCount + " " + amountCompleted);
+
+  if (habitCount == amountCompleted) {
+    console.log("happening");
+    var closeButtons = document.querySelectorAll(".btn-clear");
+    closeButtons.forEach(function (button) {
+      button.parentElement.style.display = null;
+    });
+  }
+}
+
 async function loadInTheHabits() {
+  document.getElementById("habit-div").innerHTML = "";
   let theUserId = localStorage.getItem("userId");
   // console.log(theUserId);
   const q = query(collection(db, "users", theUserId, "habits"));
@@ -112,6 +197,15 @@ async function loadInTheHabits() {
       } else {
         frequency = "Monthly";
       }
+      let isChecked;
+
+      if (doc.data().hasCompletedToday == true) {
+        isChecked = "checked: checked";
+      } else {
+        isChecked = "";
+      }
+
+      sessionStorage.setItem(doc.data().habitName, doc.id);
 
       document.getElementById("habit-div").insertAdjacentHTML(
         "afterbegin",
@@ -130,7 +224,7 @@ async function loadInTheHabits() {
             flex-direction: row;
             position: relative;
           "
-          class="text-bold text-4xl"
+          class="text-bold thecard text-4xl"
         >
           <div
             class="accordion"
@@ -163,6 +257,48 @@ async function loadInTheHabits() {
               id="habit-picture"
             />
           </figure>
+          <button
+            class="delbox btn btn-square btn-outline"
+            style="
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              font-size: x-large;
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <div class="form-control" style="width: 0px">
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                ${isChecked}
+                class="tickbox checkbox checkbox-lg"
+                style="
+                  position: absolute;
+                  width: 3rem;
+                  height: 3rem;
+                  right: 10px;
+                  top: 10px;
+                  border: 2px #316751 solid;
+                "
+                
+              />
+            </label>
+          </div>
           <!-- Habit -->
         </div>
 

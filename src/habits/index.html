@@ -175,7 +175,7 @@
             flex-direction: row;
             position: relative;
           "
-          class="text-bold text-4xl"
+          class="text-bold thecard text-4xl"
         >
           <div
             class="accordion"
@@ -208,6 +208,49 @@
               id="habit-picture"
             />
           </figure>
+
+          <button
+            class="delbox btn btn-square btn-outline"
+            style="
+              position: absolute;
+              left: 10px;
+              top: 10px;
+              font-size: x-large;
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <div class="form-control" style="width: 0px">
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                checked="checked"
+                class="tickbox checkbox checkbox-lg"
+                style="
+                  position: absolute;
+                  width: 3rem;
+                  height: 3rem;
+                  right: 10px;
+                  top: 10px;
+                  border: 2px #316751 solid;
+                "
+                id="tickbox"
+              />
+            </label>
+          </div>
           <!-- Habit -->
         </div>
 
@@ -388,6 +431,17 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="toast toast-end">
+      <div class="alert-primary alert" style="border: #355447 2px solid">
+        <span>Finished all habits for today.</span>
+        <button
+          class="btn-clear btn btn-primary float-right text-2xl"
+          onclick="this.parentElement.style.display='none';"
+        >
+          ×
+        </button>
       </div>
     </div>
   </body>
