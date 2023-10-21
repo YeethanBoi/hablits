@@ -3,6 +3,7 @@ import { db } from "./utils/firebase-utils";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import {
   getFirestore,
+  where,
   collection,
   doc,
   addDoc,
@@ -11,7 +12,6 @@ import {
   updateDoc,
   getDocs,
   query,
-  where,
   serverTimestamp,
   orderBy,
   limit,
@@ -60,16 +60,83 @@ const profileImg = document.getElementById("profile-picture");
 
 const auth = getAuth();
 
-async function updateTime() {
+async function updateTime(user) {
   const habitRef = doc(db, "users", user.uid);
 
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    let theLoggedTime = docSnap.data().lastLoggedOn.toDate();
+
+    // Convert theLoggedTime to "dd-mm-yyyy" format
+    let theLoggedTimeFormatted = theLoggedTime.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    // Convert currentDate to "dd-mm-yyyy" format
+    let currentDate = new Date();
+    let currentDateFormatted = currentDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    console.log(theLoggedTimeFormatted + " " + currentDateFormatted);
+
+    if (theLoggedTimeFormatted != currentDateFormatted) {
+      //difference between the recroded last date and the current. habits need to be reset
+      localStorage.setItem("resetHabits", true);
+      //new day since logged on
+      // console.log(docSnap.data().dateImprovement);
+      let theNewDateArray = docSnap.data().dateImprovement;
+      theNewDateArray.push(currentDateFormatted);
+      console.log(theNewDateArray);
+
+      let theCurrentPercentage = 100;
+
+      const q = query(
+        collection(db, "users", user.uid, "habits"),
+        where("hasCompletedToday", "==", true),
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        if (doc.id == "dummy") {
+          console.log("found dummy document");
+        } else {
+          theCurrentPercentage =
+            theCurrentPercentage * (parseInt(doc.data().percentage) / 100 + 1);
+          // console.log(theCurrentPercentage);
+          // console.log(typeof parseInt(doc.data().percentage));
+        }
+      });
+      let theNewPercentageArray = docSnap.data().percentageImprovement;
+      theNewPercentageArray.push(theCurrentPercentage);
+      console.log(theNewPercentageArray);
+
+      const theRef = doc(db, "users", user.uid);
+
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(theRef, {
+        percentageImprovement: theNewPercentageArray,
+        dateImprovement: theNewDateArray,
+      });
+    } else {
+      //has been on today so far
+    }
+  } else {
+    console.log("No such document!");
+  }
   await updateDoc(habitRef, {
     lastLoggedOn: serverTimestamp(),
   });
+  console.log("it worksanfjdsa");
 }
 
 onAuthStateChanged(auth, (user) => {
-  updateTime();
+  updateTime(user);
   if (user) {
     signedIn = true;
     console.log("user is signed in: ", user.displayName);

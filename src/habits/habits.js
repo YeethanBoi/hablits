@@ -8,6 +8,7 @@ import {
   collection,
   doc,
   query,
+  getDoc,
   where,
   getDocs,
   orderBy,
@@ -176,11 +177,76 @@ async function tickedbox() {
       button.parentElement.style.display = null;
     });
   }
+
+  // let theRealUserId = localStorage.getItem("userId");
+  // const thedocRef = doc(db, "users");
+  // const thedocSnap = await getDoc(thedocRef);
+  // if (thedocSnap.exists()) {
+  console.log("doing the update tick");
+  // console.log(theLoggedTimeFormatted + " " + currentDateFormatted);
+
+  let theCurrentPercentage = 100;
+
+  const k = query(
+    collection(db, "users", theUserId, "habits"),
+    where("hasCompletedToday", "==", true),
+  );
+
+  const anotherquerySnapshot = await getDocs(k);
+  anotherquerySnapshot.forEach((doc) => {
+    if (doc.id == "dummy") {
+      console.log("found dummy document");
+    } else {
+      theCurrentPercentage =
+        theCurrentPercentage * (parseInt(doc.data().percentage) / 100 + 1);
+      // console.log(theCurrentPercentage);
+      // console.log(typeof parseInt(doc.data().percentage));
+    }
+  });
+
+  const docRef = doc(db, "users", theUserId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    let theNewPercentageArray = docSnap.data().percentageImprovement;
+    theNewPercentageArray[theNewPercentageArray.length - 1] =
+      theCurrentPercentage;
+
+    // const theRef =;
+    const theredocRef = doc(db, "users", theUserId);
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(theredocRef, {
+      percentageImprovement: theNewPercentageArray,
+      // dateImprovement: theNewDateArray,
+    });
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+  }
 }
 
 async function loadInTheHabits() {
-  document.getElementById("habit-div").innerHTML = "";
   let theUserId = localStorage.getItem("userId");
+  const newDayStatus = localStorage.getItem("resetHabits");
+  if (newDayStatus == "true") {
+    console.log("New dat status");
+    const n = query(
+      collection(db, "users", theUserId, "habits"),
+      where("isDaily", "==", true),
+    );
+
+    const thequerySnapshot = await getDocs(n);
+    thequerySnapshot.forEach((thedoc) => {
+      console.log(thedoc);
+      updateDoc(doc(db, "users", theUserId, "habits", thedoc.id), {
+        hasCompletedToday: false,
+      });
+    });
+    localStorage.setItem("resetHabits", false);
+  }
+  document.getElementById("habit-div").innerHTML = "";
+
   // console.log(theUserId);
   const q = query(collection(db, "users", theUserId, "habits"));
 
@@ -384,7 +450,7 @@ async function loadInTheHabits() {
                   aria-selected="false"
                   class="inline-block p-4 hover:bg-gray-100 hover:text-gray-600"
                 >
-                  Facts
+                  Stats
                 </button>
               </li>
             </ul>

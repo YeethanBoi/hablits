@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@mariojgt/wind-notify": "^0.1.2",
+    "chart.js": "^4.4.0",
     "firebase": "^10.4.0"
   }
 }
