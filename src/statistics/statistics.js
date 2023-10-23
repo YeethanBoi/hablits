@@ -60,12 +60,62 @@ const q = query(collection(db, "users", theUserId, "habits"));
 
 const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
-  amountOfHabits++;
+  if (doc.id != "dummy") {
+    amountOfHabits++;
 
-  if (doc.data().isDaily == true) {
-    amountOfDailyHabits++;
-  } else {
-    amountOfMonthlyHabits++;
+    if (doc.data().hasCompletedToday == true) {
+      document.getElementById("habit-carousel").insertAdjacentHTML(
+        "afterbegin",
+        `<div
+    class="carousel-item h-full"
+    style="
+      background-color: #edf2ef;
+      border: 3px #456e5d solid;
+      border-radius: 4px;
+      position: relative;
+      /* width: 37%; */
+    "
+  >
+    <div
+      style="
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border: 3px #456e5d solid;
+        border-radius: 15px;
+        z-index: 999;
+        padding: 10px;
+        width: fit-content;
+        height: fit-content;
+        background-color: #fff;
+      "
+    >
+      <h1 class="text-xl font-extrabold" style="width: max-content">
+        ${doc.data().habitName}
+      </h1>
+    </div>
+    <figure style="width: 100%; height: 100%">
+      <img
+        style="
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          object-position: 100% 40%;
+        "
+        class=""
+        src="../assets/${doc.data().picture}.png"
+        alt="Album"
+        id="habit-picture"
+      />
+    </figure>
+  </div>`,
+      );
+    }
+    if (doc.data().isDaily == true) {
+      amountOfDailyHabits++;
+    } else {
+      amountOfMonthlyHabits++;
+    }
   }
 });
 
@@ -129,7 +179,23 @@ style="
 "
 >
 <dt class="mb-2 text-5xl font-extrabold">${streak}</dt>
-<dd class="text-center text-2xl text-gray-500">Day Daily Streak</dd>
+<dd class="text-center text-2xl text-gray-500">Day Highest Daily Streak</dd>
+</div>`,
+);
+
+document.getElementById("the-carousel").insertAdjacentHTML(
+  "afterbegin",
+  `<div
+class="carousel-ins carousel-item flex flex-col items-center justify-center p-3"
+style="
+  background-color: #edf2ef;
+  border: 3px #456e5d solid;
+  border-radius: 4px;
+  width: 37%;
+"
+>
+<dt class="mb-2 text-5xl font-extrabold">${currentStreak(theDateArray)}</dt>
+<dd class="text-center text-2xl text-gray-500">Day Current Streak</dd>
 </div>`,
 );
 
@@ -252,6 +318,27 @@ function longestStreak(dates) {
   }
 
   return longestStreak;
+}
+
+function currentStreak(dates) {
+  const sortedDates = dates
+    .map((date) => new Date(date.split("/").reverse().join("-")))
+    .sort((a, b) => b - a); // sort in descending order
+
+  let currentStreak = 1;
+
+  for (let i = 1; i < sortedDates.length; i++) {
+    const diffInDays =
+      (sortedDates[i - 1] - sortedDates[i]) / (1000 * 60 * 60 * 24);
+
+    if (diffInDays === 1) {
+      currentStreak++;
+    } else {
+      break;
+    }
+  }
+
+  return currentStreak;
 }
 
 function dateDifference(dates) {
