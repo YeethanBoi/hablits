@@ -80,7 +80,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${amountOfHabits}</dt>
+<dt class="mb-2 text-5xl font-extrabold">${amountOfHabits}</dt>
 <dd class="text-center text-2xl text-gray-500">Habits</dd>
 </div>`,
 );
@@ -96,7 +96,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${amountOfDailyHabits}</dt>
+<dt class="mb-2 text-5xl font-extrabold">${amountOfDailyHabits}</dt>
 <dd class="text-center text-2xl text-gray-500">Daily Habits</dd>
 </div>`,
 );
@@ -112,7 +112,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${amountOfMonthlyHabits}</dt>
+<dt class="mb-2 text-5xl font-extrabold">${amountOfMonthlyHabits}</dt>
 <dd class="text-center text-2xl text-gray-500">Monthly Habits</dd>
 </div>`,
 );
@@ -128,7 +128,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${streak}</dt>
+<dt class="mb-2 text-5xl font-extrabold">${streak}</dt>
 <dd class="text-center text-2xl text-gray-500">Day Daily Streak</dd>
 </div>`,
 );
@@ -144,7 +144,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${daysSinceStart}</dt>
+<dt class="mb-2 text-5xl font-extrabold">${daysSinceStart}</dt>
 <dd class="text-center text-2xl text-gray-500">Days Since Starting</dd>
 </div>`,
 );
@@ -160,7 +160,7 @@ style="
   width: 37%;
 "
 >
-<dt class="mb-2 text-6xl font-extrabold">${theCurrentPercentage}%</dt>
+<dt class="mb-2 text-5xl font-extrabold">${theCurrentPercentage}%</dt>
 <dd class="text-center text-2xl text-gray-500">Current Improvement Percentage</dd>
 </div>`,
 );
@@ -180,7 +180,7 @@ let myChart = new Chart(ctx, {
     labels: xValues,
     datasets: [
       {
-        label: "My Dataset",
+        label: "Percentage Improvement",
         data: yValues,
         borderColor: "#507c6a",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -194,6 +194,7 @@ let myChart = new Chart(ctx, {
     ],
   },
   options: {
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: "time",
